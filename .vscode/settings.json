@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.pyc": true,
+        "**/__pycache__": true
+    },
+    "python.pythonPath": "/home/seanpmcb/.local/share/virtualenvs/google-keep-shoppinglist-to-anylist-J6CuyYvc/bin/python",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_flask"
+    ]
+}
