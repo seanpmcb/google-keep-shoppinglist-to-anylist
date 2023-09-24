@@ -3,7 +3,21 @@ Because Google is a jerk and I want Google Assistant to add items to my shopping
 
 After adding the correct passwords and email addresses, run via `/usr/bin/node keep_to_anylist.ts` assuming all the backgound config (not entirely outlined here) is established.
 
-Tech notes
+## Config
+
+It is strongly recommended that you create an application password to allow access to google keep.
+
+Create a `config.json` file containing the following...
+```
+{
+    "keep_email": "your google keep email",
+    "keep_pass": "your google keep password",
+    "anylist_email": "your anylist email",
+    "anylist_pass": "your anylist password"
+}
+```
+
+## Tech notes
 
 This is a narly node process spawning a python process to use some libraries that I didn't want to write myself.
 
