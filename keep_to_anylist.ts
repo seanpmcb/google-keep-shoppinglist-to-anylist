@@ -1,5 +1,10 @@
 const AnyList = require('anylist');
-const any = new AnyList({email: 'seanpmcb@gmail.com', password: 'your password'});
+
+
+const { readFileSync } = require('fs');
+const config = JSON.parse(readFileSync('./config.json'))
+const any = new AnyList({email: config.anylist_email, password: config.anylist_pass})
+
 const { spawn } = require('child_process');
 const pyProcess = spawn('pipenv', ['run', 'python', 'keep_to_anylist.py']);
 const DEBUG = false;

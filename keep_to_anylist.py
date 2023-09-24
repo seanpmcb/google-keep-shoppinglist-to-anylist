@@ -1,10 +1,15 @@
+import json
 from sys import stdin, stdout, stderr
 
 import gkeepapi
 
 DEBUG = False
+config = {}
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+
 keep = gkeepapi.Keep()
-success = keep.login('seanpmcb@gmail.com', 'your password')
+success = keep.login(config['keep_email'], config['keep_pass'])
 
 notes = keep.find('Shopping')
 shoppinglist = None
