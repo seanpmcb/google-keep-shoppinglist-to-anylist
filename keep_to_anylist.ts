@@ -27,9 +27,17 @@ pyProcess.stdout.on('data', function (data) {
 
   let items = data.toString().split("\n");
 
+  if(DEBUG) {
+    console.log('Connecting to Anylist')
+  }
+
   any.login().then(async () => {
     await any.getLists();
     const testlist = any.getListByName('Shopping List');
+
+    if(DEBUG) {
+      console.log('have the shopping list. Time to start writing.')
+    }
 
     items.forEach(item => {
       if(item) {
