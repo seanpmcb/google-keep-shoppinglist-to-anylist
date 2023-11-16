@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 urllib3 = "<2"
 gkeepapi = "*"
-pyopenssl = "<3"
+pyopenssl = "*"
 
 [dev-packages]
 
