@@ -58,6 +58,10 @@ pyProcess.stdout.on('data', function (data) {
 });
 
 pyProcess.on('close', (code) => {
-  console.log(`Python script closed with code ${code}`)
-  process.exit(0)
+  if(code){
+    console.log(`Python script closed with code ${code}`)
+  } else {
+    console.log('Update succeeded')
+  }
+    process.exit(0)
 });
