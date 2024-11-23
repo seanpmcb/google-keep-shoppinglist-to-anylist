@@ -11,7 +11,7 @@ Create a `config.json` file containing the following...
 ```
 {
     "keep_email": "your google keep email",
-    "keep_pass": "your google keep password",
+    "keep_token": "your google keep token obtained via https://gkeepapi.readthedocs.io/en/latest/#obtaining-a-master-token",
     "anylist_email": "your anylist email",
     "anylist_pass": "your anylist password"
 }

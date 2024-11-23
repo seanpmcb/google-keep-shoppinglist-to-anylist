@@ -9,7 +9,7 @@ with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
 keep = gkeepapi.Keep()
-success = keep.login(config['keep_email'], config['keep_pass'])
+success = keep.authenticate(config['keep_email'], config['keep_token'])
 
 notes = keep.find('Shopping')
 shoppinglist = None
