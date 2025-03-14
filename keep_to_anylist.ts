@@ -11,42 +11,64 @@ const DEBUG = false;
 
 pyProcess.stdin.setEncoding('utf-8');
 
+// used to log python output
 pyProcess.stderr.on('data', function(data) {
-  console.log(`received stderr: ${data.toString()}`)
+  console.log(`${data.toString()}`)
 });
 
 pyProcess.stdout.on('data', function (data) {
   if(DEBUG) {
-    console.log('Pipe data from python script ...');
+    console.log('ts: Pipe data from python script ...');
     console.log(data.toString());
   }
 
   if (data == 'scriptdone\n') {
-    console.log('donezo')
+    console.log('ts: scriptdone')
   }
 
   let items = data.toString().split("\n");
 
   if(DEBUG) {
-    console.log('Connecting to Anylist')
+    console.log('ts: Connecting to Anylist')
   }
 
   any.login().then(async () => {
     await any.getLists();
-    const testlist = any.getListByName('Shopping List');
+    const shoppinglist = any.getListByName('Shopping List');
+    const seanslist = any.getListByName('Sean\'s List');
 
     if(DEBUG) {
-      console.log('have the shopping list. Time to start writing.')
+      console.log('ts: have the shopping list. Time to start writing.')
     }
 
     items.forEach(item => {
       if(item) {
-        if(DEBUG){
-          console.log(`adding ${item}`);
+        
+        // Split the item on the colon
+        const [prefix, ...itemParts] = item.split(':');
+        // Join the remaining parts in case the item name itself contains colons
+        const itemName = itemParts.join(':').trim();
+        
+        if (itemName) {
+          let targetList;
+          if (prefix === 'Shopping') {
+            targetList = shoppinglist;
+          } else if (prefix === "Sean's") {
+            targetList = seanslist;
+          }
+          
+          if (targetList) {
+            if(DEBUG){
+              console.log(`ts: writing ${item} to ${targetList.name}`);
+            }
+            let anyItem = any.createItem({name: itemName});
+            targetList.addItem(anyItem);
+            if(DEBUG) {
+              console.log(`ts: asking to delete ${item}`);
+            }
+            pyProcess.stdin.write(`${item}\n`);
+          }
         }
-        let anyItem = any.createItem({name: item});
-        testlist.addItem(anyItem);
-        pyProcess.stdin.write(`${item}\n`);
       }
     });
     pyProcess.stdin.write('donezo\n')
@@ -63,5 +85,5 @@ pyProcess.on('close', (code) => {
   } else {
     console.log('Update succeeded')
   }
-    process.exit(0)
+  process.exit(0)
 });
